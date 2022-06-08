@@ -15,7 +15,12 @@ public class Util {
 
     }
 
-    public static Connection getConnection() throws SQLException {
-        return connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    public static Connection getConnection() {
+        try {
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 }

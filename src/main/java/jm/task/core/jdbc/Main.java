@@ -4,10 +4,11 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
+import java.sql.SQLException;
 import java.util.ListIterator;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         UserServiceImpl userService = new UserServiceImpl();
         userService.createUsersTable();
@@ -31,7 +32,7 @@ public class Main {
         userService.dropUsersTable();
     }
 
-    public static void outUser () {
+    public static void outUser () throws SQLException {
         UserServiceImpl userService = new UserServiceImpl();
         User user = userService.getAllUsers().get(userService.countUsersTable());
         System.out.println("User с именем - " + user.getName() + " добавлен в базу данных");
