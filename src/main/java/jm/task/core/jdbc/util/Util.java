@@ -1,5 +1,10 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,11 +13,24 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/javapp";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "12345678";
-
     private static Connection connection;
+
+    private static Configuration cnf = new Configuration()
+            .addAnnotatedClass(User.class)
+            .setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver")
+            .setProperty("hibernate.connection.url", URL)
+            .setProperty("hibernate.connection.username", USERNAME)
+            .setProperty("hibernate.connection.password", PASSWORD)
+            .setProperty("hibernate.show_sql", "true")
+            .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
+            .setProperty("hibernate.current_session_context_class", "thread");
 
     private Util() {
 
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return cnf.buildSessionFactory();
     }
 
     public static Connection getConnection() {
